@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <form action="{{ route('admin.categories.tags.store', $category->id) }}" method="post">
                             @csrf
-                            <x-input-text label="Nombre *" name="name" value="" required autofocus></x-input-text>
+                            <x-input-text label="Nombre *" name="name" required autofocus></x-input-text>
                             <button type="submit" class="btn btn-success btn-sm">Crear</button>
                             <a href="{{ route('admin.categories.tags.index', $category->id) }}" class="btn btn-dark btn-sm">Regresar</a>
                         </form>

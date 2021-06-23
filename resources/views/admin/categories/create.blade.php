@@ -13,8 +13,8 @@
                     <div class="card-body">
                         <form action="{{ route('admin.categories.store') }}" method="POST">
                             @csrf
-                            <x-input-text label="Nombre *" name="name" value="" required autofocus></x-input-text>
-                            <x-text-area label="Descripción" name="description" value=""></x-text-area>
+                            <x-input-text label="Nombre *" name="name" required autofocus></x-input-text>
+                            <x-text-area label="Descripción" name="description"></x-text-area>
                             <button type="submit" class="btn btn-success btn-sm">Crear</button>
                             <a href="{{ route('admin.categories.index') }}" class="btn btn-dark btn-sm">Regresar</a>
                         </form>
