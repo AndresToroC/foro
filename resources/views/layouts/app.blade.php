@@ -23,13 +23,21 @@
                         @include('elements.header')
                         <div class="my-3 my-md-5">
                             <div class="container">
+                                <!-- Page title -->
+                                <div class="page-header d-print-none">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h2 class="page-title"> {{ $header }} </h2>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if (Session::has('message'))
                                     <div class="alert alert-{{Session::get('message')['type']}} alert-dismissible fade show" role="alert">
                                         {{Session::get('message')['text']}}
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 @endif
-                                @yield('content')
+                                {{ $content }}
                             </div>
                         </div>
                     </div>
@@ -39,5 +47,6 @@
     </body>
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
-    @yield('scripts')
+    
+    {{ $scripts }}
 </html>

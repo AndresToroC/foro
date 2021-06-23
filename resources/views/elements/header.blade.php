@@ -46,7 +46,12 @@
             <div class="col-lg order-lg-first">
                 <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
                     <li class="nav-item">
-                        <a href="{{ route('home') }}" class="nav-link"><i class="fas fa-home"></i> Inicio</a>
+                        <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}"><i class="fas fa-home"></i> Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories') ? 'active' : '' }}">
+                            <i class="fas fa-layer-group"></i> Categorias
+                        </a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fas fa-calendar"></i> Components</a>
