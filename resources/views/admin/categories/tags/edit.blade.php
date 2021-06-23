@@ -15,13 +15,7 @@
                         <form action="{{ route('admin.categories.tags.update', [$category->id, $tag->id]) }}" method="post">
                             @csrf
                             @method('PUT')
-                            <div class="form-group">
-                                <label for="name">Nombre *</label>
-                                <input type="text" name="name" id="name" value="{{ $tag->name }}" class="form-control">
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
+                            <x-input-text label="Nombre *" name="name" value="{{ $tag->name }}" required></x-input-text>
                             <button type="submit" class="btn btn-primary btn-sm">Actualizar</button>
                             <a href="{{ route('admin.categories.tags.index', $category->id) }}" class="btn btn-dark btn-sm">Regresar</a>
                         </form>

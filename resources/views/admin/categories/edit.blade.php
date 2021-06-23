@@ -14,17 +14,8 @@
                         <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                            <div class="form-group">
-                                <label for="name">Nombre *</label>
-                                <input type="text" name="name" id="name" value="{{ $category->name }}" class="form-control" required>
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Descripción</label>
-                                <textarea name="description" id="description" cols="30" rows="5" class="form-control">{{ $category->description }}</textarea>
-                            </div>
+                            <x-input-text label="Nombre *" name="name" value="{{ $category->name }}" required></x-input-text>
+                            <x-text-area label="Descripción" name="description" value="{{ $category->description }}"></x-text-area>
                             <button type="submit" class="btn btn-primary btn-sm">Actualizar</button>
                             <a href="{{ route('admin.categories.index') }}" class="btn btn-dark btn-sm">Regresar</a>
                         </form>

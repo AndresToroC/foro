@@ -13,17 +13,8 @@
                     <div class="card-body">
                         <form action="{{ route('admin.categories.store') }}" method="POST">
                             @csrf
-                            <div class="form-group">
-                                <label for="name">Nombre *</label>
-                                <input type="text" name="name" id="name" class="form-control" required>
-                                @error('name')
-                                    <small class="text-danger">{{ $message }}</small>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Descripción</label>
-                                <textarea name="description" id="description" cols="30" rows="5" class="form-control"></textarea>
-                            </div>
+                            <x-input-text label="Nombre *" name="name" value="" required autofocus></x-input-text>
+                            <x-text-area label="Descripción" name="description" value=""></x-text-area>
                             <button type="submit" class="btn btn-success btn-sm">Crear</button>
                             <a href="{{ route('admin.categories.index') }}" class="btn btn-dark btn-sm">Regresar</a>
                         </form>
