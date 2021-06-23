@@ -49,7 +49,7 @@
                         <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}"><i class="fas fa-home"></i> Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories') ? 'active' : '' }}">
+                        <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}">
                             <i class="fas fa-layer-group"></i> Categorias
                         </a>
                     </li>

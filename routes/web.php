@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryTagController;
 
 Auth::routes();
 
@@ -21,5 +22,6 @@ Route::middleware('auth')->group(function() {
 
     Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('categories', CategoryController::class);
+        Route::resource('categories.tags', CategoryTagController::class);
     });
 });

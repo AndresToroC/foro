@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Categorias
+        <h2 class="page-title">Categorias</h2>
     </x-slot>
 
     <x-slot name="content">
@@ -8,6 +8,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+                        <b>Lista de Categorias</b>
                         <div class="card-options">
                             <a href="{{ route('admin.categories.create') }}" class="btn btn-success btn-sm">Nueva categoría <i class="fas fa-plus"></i></a>
                         </div>
@@ -25,6 +26,9 @@
                                     <tr>
                                         <td>{{ $category->name }}</td>
                                         <td class="text-right">
+                                            <a href="{{ route('admin.categories.tags.index', $category->id) }}" class="btn btn-info btn-sm">
+                                                Etiquetas <i class="fas fa-list"></i>
+                                            </a>
                                             <a href="{{ route('admin.categories.edit', $category->id) }}" class="btn btn-primary btn-sm">
                                                 Editar <i class="fas fa-edit"></i>
                                             </a>
