@@ -10,11 +10,16 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $search = '';
+        if ($request->has('search')) {
+            $search = $request->search;
+        }
 
-        return view('admin.categories.index', compact('categories'));
+        $categories = Category::searchAndPaginate();
+        
+        return view('admin.categories.index', compact('categories', 'search'));
     }
 
     public function create()
@@ -66,9 +71,14 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
-        $category->delete();
+        try {
+            $category->delete();
 
-        $message = ['type' => 'success', 'text' => 'Categoría eliminada correctamente'];
+            $message = ['type' => 'success', 'text' => 'Categoría eliminada correctamente'];
+        } catch (\Throwable $th) {
+            $message = ['type' => 'danger', 'text' => 'Esta categoría no se puede eliminar ya que esta en uso'];
+        }
+
         Session::flash('message', $message);
 
         return redirect()->back();

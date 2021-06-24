@@ -9,6 +9,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+                        <div class="card-status bg-blue"></div>
                         <b>Editar etiqueta</b>
                     </div>
                     <div class="card-body">

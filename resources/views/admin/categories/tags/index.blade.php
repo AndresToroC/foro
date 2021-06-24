@@ -9,6 +9,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+                        <div class="card-status bg-blue"></div>
                         <b>Lista de etiquetas</b>
                         <div class="card-options">
                             <a href="{{ route('admin.categories.tags.create', $category->id) }}" class="btn btn-success btn-sm">Nueva etiqueta <i class="fas fa-plus"></i></a>

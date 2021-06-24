@@ -11,7 +11,11 @@
                         <span class="ml-2 d-none d-lg-block">
                             <span class="text-default">{{ Auth::user() ? Auth::user()->name : '' }}</span>
                             <small class="text-muted d-block mt-1">
-                                admin
+                                @role('admin')
+                                    Administrador
+                                @else
+                                    Bloguero
+                                @endrole
                             </small>
                         </span>
                     </a>
@@ -48,17 +52,19 @@
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}"><i class="fas fa-home"></i> Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}">
-                            <i class="fas fa-layer-group"></i> Categorias
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
+                    @role('admin')
+                        <li class="nav-item">
+                            <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}">
+                                <i class="fas fa-layer-group"></i> Categorias
+                            </a>
+                        </li>
+                    @endrole
+                    {{-- <li class="nav-item dropdown">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fas fa-calendar"></i> Components</a>
                         <div class="dropdown-menu dropdown-menu-arrow">
                             <a href="" class="dropdown-item ">Example</a>
                         </div>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>
