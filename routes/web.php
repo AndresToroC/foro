@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryTagController;
+use App\Http\Controllers\UserPostController;
 
 Auth::routes();
 
@@ -24,4 +25,6 @@ Route::middleware('auth')->group(function() {
         Route::resource('categories', CategoryController::class);
         Route::resource('categories.tags', CategoryTagController::class);
     });
+
+    Route::resource('user.posts', UserPostController::class);
 });

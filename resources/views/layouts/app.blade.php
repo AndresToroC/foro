@@ -25,12 +25,8 @@
                         <div class="my-3 my-md-5">
                             <div class="container">
                                 <!-- Page title -->
-                                <div class="page-header d-print-none">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            {{ $header }} 
-                                        </div>
-                                    </div>
+                                <div class="page-header">
+                                    {{ $header }}
                                 </div>
                                 @if (Session::has('message'))
                                     <div class="alert alert-{{Session::get('message')['type']}} alert-dismissible fade show" role="alert">

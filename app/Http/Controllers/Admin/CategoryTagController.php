@@ -11,11 +11,16 @@ use App\Models\Tag;
 
 class CategoryTagController extends Controller
 {
-    public function index(Category $category)
+    public function index(Request $request, Category $category)
     {
-        $category->load('tags');
+        $search = '';
+        if ($request->has('search')) {
+            $search = $request->search;
+        }
 
-        return view('admin.categories.tags.index', compact('category'));
+        $tags = $category->tags()->searchAndPaginate();
+
+        return view('admin.categories.tags.index', compact('category', 'tags', 'search'));
     }
 
     public function create(Category $category)
@@ -37,7 +42,7 @@ class CategoryTagController extends Controller
         $message = ['type' => 'success', 'text' => 'Etiqueta creada correctamente'];
         Session::flash('message', $message);
 
-        return redirect()->route('admin.categories.tags.create', compact('category'));
+        return redirect()->back();
     }
 
     public function show(Category $category, Tag $tag)
@@ -63,7 +68,7 @@ class CategoryTagController extends Controller
         $message = ['type' => 'success', 'text' => 'Etiqueta actualizada correctamente'];
         Session::flash('message', $message);
 
-        return redirect()->route('admin.categories.tags.edit', compact('category', 'tag'));
+        return redirect()->back();
     }
 
     public function destroy(Category $category, Tag $tag)

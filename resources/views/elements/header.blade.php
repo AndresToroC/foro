@@ -52,6 +52,9 @@
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link {{ Request::is('home') ? 'active' : '' }}"><i class="fas fa-home"></i> Inicio</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('user.posts.index', Auth::user()->id) }}" class="nav-link {{ Request::is('user/*') ? 'active' : '' }}"><i class="fas fa-paste"></i> Foros publicados</a>
+                    </li>
                     @role('admin')
                         <li class="nav-item">
                             <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}">

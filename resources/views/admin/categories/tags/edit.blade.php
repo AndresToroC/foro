@@ -1,7 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="page-pretitle">Categoría: {{ $category->name }}</div>
-        <h2 class="page-title">Etiquetas</h2>
+        <div class="row align-items-center">
+            <div class="col">
+                <div class="page-pretitle">Categoría: {{ $category->name }}</div>
+                <h2 class="page-title">Etiquetas</h2>
+            </div>
+        </div>
     </x-slot>
 
     <x-slot name="content">

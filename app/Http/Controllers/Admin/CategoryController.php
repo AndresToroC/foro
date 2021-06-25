@@ -40,7 +40,7 @@ class CategoryController extends Controller
         $message = ['type' => 'success', 'text' => 'Categoría creada correctamente'];
         Session::flash('message', $message);
 
-        return redirect()->route('admin.categories.create');
+        return redirect()->back();
     }
 
     public function show(Category $category)
@@ -66,7 +66,7 @@ class CategoryController extends Controller
         $message = ['type' => 'success', 'text' => 'Categoría actualizada correctamente'];
         Session::flash('message', $message);
 
-        return redirect()->route('admin.categories.edit', compact('category'));
+        return redirect()->back();
     }
 
     public function destroy(Category $category)
