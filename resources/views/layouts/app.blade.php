@@ -15,6 +15,7 @@
         @yield('styles')
         <script src="{{asset('js/fonst.js')}}"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     </head>
     <body class="">
         <div id='app'>
@@ -44,6 +45,8 @@
     </body>
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/app.js')}}"></script>
-    
+
     {{ $scripts }}
+    
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </html>

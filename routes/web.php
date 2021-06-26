@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryTagController;
 use App\Http\Controllers\UserPostController;
+use App\Http\Controllers\Api\TagController;
 
 Auth::routes();
 
@@ -27,4 +28,8 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::resource('user.posts', UserPostController::class);
+
+    Route::prefix('api')->group(function() {
+        Route::get('category/{category}/tags', [TagController::class, 'index']);
+    });
 });

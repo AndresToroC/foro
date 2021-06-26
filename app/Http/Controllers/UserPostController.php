@@ -31,9 +31,8 @@ class UserPostController extends Controller
     public function create(User $user)
     {
         $categories = Category::pluck('name', 'id');
-        $tags = Tag::pluck('name', 'id');
 
-        return view('users.posts.create', compact('user', 'categories', 'tags'));
+        return view('users.posts.create', compact('user', 'categories'));
     }
 
     public function store(Request $request, User $user)
@@ -43,7 +42,7 @@ class UserPostController extends Controller
             'name' => 'required|max:100',
             'content' => 'required'
         ];
-
+        
         $request->validate($rules);
         
         if (!$request->has('is_visible')) {
@@ -52,6 +51,10 @@ class UserPostController extends Controller
         
         $post = new Post($request->all());
         $user->posts()->save($post);
+
+        if ($request->has('tag_ids')) {
+            $post->post_tag()->attach($request->tag_ids);
+        }
 
         $message = ['type' => 'success', 'text' => 'Foro creado correctamente'];
         Session::flash('message', $message);

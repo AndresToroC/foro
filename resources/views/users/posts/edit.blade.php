@@ -23,9 +23,12 @@
                                 <div class="col-md-6">
                                     <x-select label="Categoría" name="category_id" :options=$categories value="{{ $post->category_id }}"></x-select>
                                 </div>
-                                {{-- <div class="col-md-6">
-                                    <x-select label="Etiqueta" name="tag_ids[]" :options=$tags placeholder="Seleccione una etiqueta"></x-select>
-                                </div> --}}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="tag_ids">Etiquetas</label>
+                                        <select name="tag_ids[]" id="tag_ids" class="form-control" multiple="multiple"></select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="is_visible" id="is_visible" value="1" 
@@ -44,5 +47,25 @@
         </div>
     </x-slot>
 
-    <x-slot name="scripts"></x-slot>
+    <x-slot name="scripts">
+        <script>
+            $('#category_id').on('change', function(e) {
+                var category_id = e.target.value;
+
+                $('#tag_ids').empty();
+                $.get('../../../../api/category/'+ category_id +'/tags', function(data) {
+                    $.each(data['tags'], function(key, tag) {
+                        $('#tag_ids').append('<option value="'+ tag.id +'">'+ tag.name +'</option>')
+                    });
+                });
+            });
+
+            // Select2
+            $(document).ready(function() {
+                $('#tag_ids').select2({
+                    placeholder: 'Seleccione una etiqueta'
+                });
+            });
+        </script>
+    </x-slot>
 </x-app-layout>

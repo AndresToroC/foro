@@ -16,4 +16,8 @@ class Tag extends Model
     protected $fillable = [
         'category_id', 'name'
     ];
+
+    public function posts() {
+        return $this->belongsToMany(Post::class);
+    }
 }
