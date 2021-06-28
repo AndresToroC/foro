@@ -15,17 +15,32 @@ class UserPostController extends Controller
 {
     public function index(Request $request, User $user)
     {
-        $search = '';
-        if ($request->has('search')) {
-            $search = $request->search;
-        }
-
-        $posts = $user->posts()->with('category')->searchAndPaginate();
+        $post_filter = isset($request->post) ? $request->post : '';
+        $categoryId_filter = isset($request->category_id) ? $request->category_id : '';
+        $tagId_filter = isset($request->tag_id) ? $request->tag_id : '';
         
+        $posts = $user->posts()->with(['category', 'post_tag'])
+            ->where('name', 'LIKE', '%'.$post_filter.'%')
+            ->where(function($q) use ($categoryId_filter, $tagId_filter) {
+                if ($categoryId_filter) {
+                    if ($tagId_filter) {
+                        $q->where('category_id', $categoryId_filter)
+                            ->whereHas('post_tag', function($query) use ($tagId_filter) {
+                                if ($tagId_filter) {
+                                    $query->whereId($tagId_filter);
+                                }
+                            });
+                    } else {
+                        $q->where('category_id', $categoryId_filter);
+                    }
+                }
+            })
+            ->searchAndPaginate();
+            
         $categories = Category::pluck('name', 'id');
-        $tags = Tag::pluck('name', 'id');
         
-        return view('users.posts.index', compact('user', 'posts', 'search', 'categories', 'tags'));
+        return view('users.posts.index', compact('user', 'posts', 'categories', 'post_filter', 
+            'categoryId_filter', 'tagId_filter'));
     }
 
     public function create(User $user)
@@ -70,7 +85,7 @@ class UserPostController extends Controller
     public function edit(User $user, Post $post)
     {
         $categories = Category::pluck('name', 'id');
-        $tags = Tag::pluck('name', 'id');
+        $post->load('post_tag');
 
         return view('users.posts.edit', compact('user', 'post', 'categories'));
     }
@@ -89,7 +104,13 @@ class UserPostController extends Controller
             $request['is_visible'] = 0;
         }
         
+        // Se eliminan las etiquetas
+        $post->post_tag()->detach();
+
         $post->update($request->all());
+
+        // Se agregan las nuevas etiquetas
+        $post->post_tag()->attach($request->tag_ids);
 
         $message = ['type' => 'success', 'text' => 'Foro actualizado correctamente'];
         Session::flash('message', $message);
@@ -99,6 +120,7 @@ class UserPostController extends Controller
 
     public function destroy(User $user, Post $post)
     {
+        $post->post_tag()->detach();
         $post->delete();
 
         $message = ['type' => 'success', 'text' => 'Foro eliminado correctamente'];

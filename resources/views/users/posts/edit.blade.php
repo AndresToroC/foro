@@ -49,6 +49,25 @@
 
     <x-slot name="scripts">
         <script>
+            let tags_selected = @JSON($post->post_tag);
+
+            window.addEventListener('load', (event) => {
+                let categoryId = @JSON($post->category_id);
+                        
+                $('#tag_ids').empty();
+                $.get('../../../../api/category/'+ categoryId +'/tags', function(data) {
+                    $.each(data['tags'], function(key, tag) {
+                        let tag_selected = tags_selected.find(i => i.id === tag.id);
+
+                        if (tag_selected) {
+                            $('#tag_ids').append('<option value="'+ tag.id +'" selected>'+ tag.name +'</option>');
+                        } else {
+                            $('#tag_ids').append('<option value="'+ tag.id +'">'+ tag.name +'</option>');
+                        }
+                    });
+                });
+            });
+            
             $('#category_id').on('change', function(e) {
                 var category_id = e.target.value;
 
