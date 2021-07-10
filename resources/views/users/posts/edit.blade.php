@@ -85,6 +85,14 @@
                     placeholder: 'Seleccione una etiqueta'
                 });
             });
+
+            $(document).ready(function() {
+                $('#content').summernote({
+                    placeholder: 'Agregar contenido',
+                    tabsize: 2,
+                    height: 150,
+                });
+            });
         </script>
     </x-slot>
 </x-app-layout>

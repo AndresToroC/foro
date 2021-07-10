@@ -17,7 +17,7 @@
                         <form action="{{ route('user.posts.store', $user->id) }}" method="post">
                             @csrf
                             <x-input-text label="Nombre *" name="name"></x-input-text>
-                            <x-text-area label="Contenido *" name="content"></x-text-area>
+                            <x-text-area label="Contenido *" name="content" ></x-text-area>
                             <div class="row">
                                 <div class="col-md-6">
                                     <x-select label="Categoría" name="category_id" :options=$categories placeholder="Seleccione una categoría"></x-select>
@@ -59,6 +59,14 @@
             $(document).ready(function() {
                 $('#tag_ids').select2({
                     placeholder: 'Seleccione una etiqueta'
+                });
+            });
+
+            $(document).ready(function() {
+                $('#content').summernote({
+                    placeholder: 'Agregar contenido',
+                    tabsize: 2,
+                    height: 150,
                 });
             });
         </script>
