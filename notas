@@ -1,0 +1,9 @@
+- Agregar Breadcrumb
+- Agregar audiencias con laravel audit
+
+1. Foros
+    - Pantalla de inicio despues del login
+    - Agregar sistema de me gustas y agregar a mis favoritos
+    - Al ver un post agregar un comentario
+    - Notificaciones en tiempo real de cuando se publica un comentario en un post(favoritos, dueño)
+    

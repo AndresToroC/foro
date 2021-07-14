@@ -15,7 +15,7 @@ class Post extends Model
     static $search_columns = ['name'];
 
     protected $fillable = [
-        'category_id', 'user_id', 'name', 'content', 'is_visible'
+        'category_id', 'user_id', 'name', 'description', 'content', 'is_visible'
     ];
 
     public function category() {

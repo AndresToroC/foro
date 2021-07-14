@@ -18,6 +18,7 @@
                             @csrf
                             @method('PUT')
                             <x-input-text label="Nombre *" name="name" value="{{ $post->name }}"></x-input-text>
+                            <x-text-area label="Descripción *" name="description" value="{{ $post->description }}"></x-text-area>
                             <x-text-area label="Contenido *" name="content" value="{{ $post->content }}"></x-text-area>
                             <div class="row">
                                 <div class="col-md-6">

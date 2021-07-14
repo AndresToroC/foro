@@ -55,6 +55,7 @@ class UserPostController extends Controller
         $rules = [
             'category_id' => 'required',
             'name' => 'required|max:100',
+            'description' => 'required|max:255|min:10',
             'content' => 'required'
         ];
         
@@ -74,7 +75,7 @@ class UserPostController extends Controller
         $message = ['type' => 'success', 'text' => 'Foro creado correctamente'];
         Session::flash('message', $message);
 
-        return redirect()->back();
+        return redirect()->back()->withInput();
     }
 
     public function show(User $user, Post $post)
@@ -95,6 +96,7 @@ class UserPostController extends Controller
         $rules = [
             'category_id' => 'required',
             'name' => 'required|max:100',
+            'description' => 'required|max:255|min:10',
             'content' => 'required'
         ];
 

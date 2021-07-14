@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="page-title">Foros Publicados</h1>
+        <h1 class="page-title">Mis Foros</h1>
         <div class="page-options d-flex">
             <div class="input-icon ml-2">
                 <a href="{{ route('user.posts.create', $user->id) }}" class="btn btn-success btn-sm">Nuevo foro <i class="fas fa-plus"></i></a>
@@ -53,7 +53,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-9">
-                                    <p>{{ substr($post->content, 0, 255) }} {{ (strlen($post->content) > 255) ? '...' : '' }}</p>
+                                    {{-- <p>{{ substr($post->content, 0, 255) }} {{ (strlen($post->content) > 255) ? '...' : '' }}</p> --}}
+                                    {{ ($post->description) ? $post->description : 'No se encontro una descripción' }}
                                 </div>
                                 <div class="col-md-3 text-right">
                                     <a href="{{ route('user.posts.edit', [$user->id, $post->id]) }}" class="btn btn-primary btn-sm">Editar <i class="fas fa-edit"></i></a>
@@ -129,7 +130,7 @@
 
                 $('#tag_id').empty();
                 $('#tag_id').append('<option disabled selected>Seleccione una Etiqueta</option>');
-                $.get('../../../api/category/'+ category_id +'/tags', function(data) {
+                $.get('../../api/category/'+ category_id +'/tags', function(data) {
                     $.each(data['tags'], function(key, tag) {
                         $('#tag_id').append('<option value="'+ tag.id +'">'+ tag.name +'</option>');
                     });

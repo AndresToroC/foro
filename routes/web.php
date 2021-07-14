@@ -5,8 +5,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryTagController;
-use App\Http\Controllers\UserPostController;
+
 use App\Http\Controllers\Api\TagController;
+
+use App\Http\Controllers\UserPostController;
+use App\Http\Controllers\PostController;
 
 Auth::routes();
 
@@ -28,6 +31,7 @@ Route::middleware('auth')->group(function() {
     });
 
     Route::resource('user.posts', UserPostController::class);
+    Route::resource('posts', PostController::class);
 
     Route::prefix('api')->group(function() {
         Route::get('category/{category}/tags', [TagController::class, 'index']);

@@ -17,6 +17,7 @@
                         <form action="{{ route('user.posts.store', $user->id) }}" method="post">
                             @csrf
                             <x-input-text label="Nombre *" name="name"></x-input-text>
+                            <x-text-area label="Descripción *" name="description" ></x-text-area>
                             <x-text-area label="Contenido *" name="content" ></x-text-area>
                             <div class="row">
                                 <div class="col-md-6">
