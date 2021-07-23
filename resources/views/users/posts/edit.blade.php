@@ -18,8 +18,7 @@
                             @csrf
                             @method('PUT')
                             <x-input-text label="Nombre *" name="name" value="{{ $post->name }}"></x-input-text>
-                            <x-text-area label="Descripción *" name="description" value="{{ $post->description }}"></x-text-area>
-                            <x-text-area label="Contenido *" name="content" value="{{ $post->content }}"></x-text-area>
+                            <x-text-area label="Contenido *" name="content" value="{!! html_entity_decode($post->content) !!}"></x-text-area>
                             <div class="row">
                                 <div class="col-md-6">
                                     <x-select label="Categoría" name="category_id" :options=$categories value="{{ $post->category_id }}"></x-select>
@@ -89,9 +88,20 @@
 
             $(document).ready(function() {
                 $('#content').summernote({
+                    lang: 'es-ES',
                     placeholder: 'Agregar contenido',
                     tabsize: 2,
                     height: 150,
+                    toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'video']],
+                        ['view', ['help']],
+                    ]
                 });
             });
         </script>

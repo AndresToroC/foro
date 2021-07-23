@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\TagController;
 
 use App\Http\Controllers\UserPostController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PostCommentController;
 
 Auth::routes();
 
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function() {
 
     Route::resource('user.posts', UserPostController::class);
     Route::resource('posts', PostController::class);
+    Route::resource('posts.comments', PostCommentController::class)->except(['index', 'create', 'show']);
 
     Route::prefix('api')->group(function() {
         Route::get('category/{category}/tags', [TagController::class, 'index']);

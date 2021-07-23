@@ -55,7 +55,6 @@ class UserPostController extends Controller
         $rules = [
             'category_id' => 'required',
             'name' => 'required|max:100',
-            'description' => 'required|max:255|min:10',
             'content' => 'required'
         ];
         
@@ -96,10 +95,9 @@ class UserPostController extends Controller
         $rules = [
             'category_id' => 'required',
             'name' => 'required|max:100',
-            'description' => 'required|max:255|min:10',
             'content' => 'required'
         ];
-
+        
         $request->validate($rules);
 
         if (!$request->has('is_visible')) {
