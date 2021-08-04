@@ -17,8 +17,15 @@
                                 <div class="d-flex justify-content-between">
                                     <p>Fecha: {{ $post->created_at }}</p>
                                     <div>
-                                        <i class="fas fa-thumbs-up" style="color: blue"></i> 12
-                                        <i class="fas fa-thumbs-down" style="color: red"></i> 8
+                                        <button onclick="form_like('post', {{ $post->id }}, 'like')" class="btn">
+                                            <i class="far fa-thumbs-up" style="color: blue">
+                                                {{ count($post->likes) }}
+                                            </i>
+                                        </button>
+                                        <button onclick="form_like('post', {{ $post->id }}, 'dislike')" class="btn">
+                                            <i class="far fa-thumbs-down" style="color: red"></i> 
+                                            {{ count($post->likes) }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -34,9 +41,32 @@
                 @endif
                 @forelse ($post->comments as $comment)
                     <div class="card">
-                        <div class="card-status bg-blue"></div>
+                        @if ($comment->user->id == Auth::user()->id)
+                            <div class="card-status bg-lime"></div>
+                        @else
+                            <div class="card-status bg-blue"></div>
+                        @endif
+
                         <div class="card-body">
-                            <p>Autor: {{ $comment->user->name }}</p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="d-flex justify-content-between">
+                                        <p>Autor: {{ $comment->user->name }}</p>
+                                        @if ($comment->user->id == Auth::user()->id)
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item" type="button">Editar</button>
+                                                    <button class="dropdown-item" type="button">Eliminar</button>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                             {!! html_entity_decode($comment->comment) !!}
                             <hr>
                             <div class="row">
@@ -74,6 +104,12 @@
                 </div>
             </div>
         </div>
+
+        {{-- Form likes --}}
+        <form action="{{ route('users.likes.store', Auth::user()->id) }}" method="post" class="display: none"
+            id="form-likes">
+            @csrf
+        </form>
     </x-slot>
 
     <x-slot name="scripts">
@@ -96,6 +132,31 @@
                     ]
                 });
             });
+
+            function form_like(model, id, type) {
+                let form =  document.getElementById('form-likes');
+
+                let inputModel = document.createElement('input');
+                inputModel.name = 'model';
+                inputModel.type = 'hidden';
+                inputModel.value = model;
+                form.appendChild(inputModel);
+
+                let inputModelId = document.createElement('input');
+                inputModelId.name = 'model_id';
+                inputModelId.type = 'hidden';
+                inputModelId.value = id;
+                form.appendChild(inputModelId);
+
+                let inputType = document.createElement('input');
+                inputType.name = 'type';
+                inputType.type = 'hidden';
+                inputType.value = type;
+                form.appendChild(inputType);
+
+                document.getElementById('form-likes').submit();
+                event.preventDefault();
+            }
         </script>
     </x-slot>
 </x-app-layout>

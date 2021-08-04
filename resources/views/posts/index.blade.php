@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h1 class="page-title">Mis Foros</h1>
+        <h1 class="page-title">Foros</h1>
     </x-slot>
 
     <x-slot name="content">
@@ -18,16 +18,13 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-9">
-                                    {{ ($post->description) ? $post->description : 'No se encontro una descripción' }}
+                                    Publicado el: {{ $post->created_at }} <br>
+                                    Autor: {{ $post->user->name }}
                                 </div>
                                 <div class="col-md-3 text-right">
                                     <a href="{{ route('posts.show', $post->id) }}" class="btn btn-default btn-sm">
                                         <i class="fas fa-eye" style="color: blue"></i>
                                         <div class="mt-1 text-muted text-h5">Ver más</div>
-                                    </a>
-                                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-default btn-sm">
-                                        <i class="fas fa-heart" style="color: red"></i>
-                                        <div class="mt-1 text-muted text-h5">Me gusta</div>
                                     </a>
                                     <a href="{{ route('posts.show', $post->id) }}" class="btn btn-default btn-sm">
                                         <i class="fas fa-star" style="color: yellow"></i>

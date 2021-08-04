@@ -10,8 +10,8 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::whereIsVisible(1)->searchAndPaginate();
-
+        $posts = Post::with('likes')->whereIsVisible(1)->searchAndPaginate();
+        
         return view('posts.index', compact('posts'));
     }
 
@@ -27,7 +27,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        $post->load('user', 'comments');
+        $post->load('likes', 'user', 'comments.likes');
         
         return view('posts.show', compact('post'));
     }

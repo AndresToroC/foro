@@ -33,4 +33,8 @@ class Post extends Model
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+
+    public function likes() {
+        return $this->morphToMany(Like::class, 'model', 'model_has_likes')->withPivot('user_id');
+    }
 }
