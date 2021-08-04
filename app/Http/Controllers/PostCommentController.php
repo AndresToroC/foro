@@ -21,7 +21,7 @@ class PostCommentController extends Controller
         $comment = new Comment($request->all());
         $post->comments()->save($comment);
 
-        $message = ['type' => 'success', 'text' => 'Comentario agregado correctament'];
+        $message = ['type' => 'success', 'text' => 'Comentario agregado correctamente'];
         Session::flash('message', $message);
 
         return redirect()->back();
@@ -29,16 +29,33 @@ class PostCommentController extends Controller
 
     public function edit(Post $post, Comment $comment)
     {
-        //
+        return view('posts.comments.edit', compact('post', 'comment'));
     }
 
     public function update(Request $request, Post $post, Comment $comment)
     {
-        //
+        $rules = [
+            'comment' => 'required'
+        ];
+        
+        $request->validate($rules);
+
+        $comment->update($request->all());
+
+        $message = ['type' => 'success', 'text' => 'Comentario actualizaco correctamente'];
+        Session::flash('message', $message);
+
+        return redirect()->back();
     }
 
     public function destroy(Post $post, Comment $comment)
     {
-        //
+        $comment->likes()->detach();
+        $comment->delete();
+
+        $message = ['type' => 'success', 'text' => 'Comentario eliminado correctamente'];
+        Session::flash('message', $message);
+
+        return redirect()->back();
     }
 }

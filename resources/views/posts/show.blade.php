@@ -18,13 +18,16 @@
                                     <p>Fecha: {{ $post->created_at }}</p>
                                     <div>
                                         <button onclick="form_like('post', {{ $post->id }}, 'like')" class="btn">
-                                            <i class="far fa-thumbs-up" style="color: blue">
-                                                {{ count($post->likes) }}
+                                            <i class="{{ ($post->likes()->whereNameAndUserId('like', Auth::user()->id)->first()) ? 'fas' : 'far' }} fa-thumbs-up" 
+                                                style="color: blue">
+                                                {{ count($post->likes()->whereLikeId(1)->get()) }}
                                             </i>
                                         </button>
                                         <button onclick="form_like('post', {{ $post->id }}, 'dislike')" class="btn">
-                                            <i class="far fa-thumbs-down" style="color: red"></i> 
-                                            {{ count($post->likes) }}
+                                            <i class="{{ ($post->likes()->whereNameAndUserId('dislike', Auth::user()->id)->first()) ? 'fas' : 'far' }} fa-thumbs-down" 
+                                                style="color: red">
+                                                {{ count($post->likes()->whereLikeId(2)->get()) }}                                   
+                                            </i> 
                                         </button>
                                     </div>
                                 </div>
@@ -58,8 +61,12 @@
                                                     <i class="fas fa-cog"></i>
                                                 </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item" type="button">Editar</button>
-                                                    <button class="dropdown-item" type="button">Eliminar</button>
+                                                    <a href="{{ route('posts.comments.edit', [$post->id, $comment->id]) }}" class="dropdown-item">Editar</a>
+                                                    <form action="{{ route('posts.comments.destroy', [$post->id, $comment->id]) }}" onclick="return confirm('¿Estas seguro de eliminar este comentatio?')" method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="dropdown-item" type="submit">Eliminar</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         @endif
@@ -74,8 +81,18 @@
                                     <div class="d-flex justify-content-between">
                                         <p>Fecha: {{ $comment->created_at }}</p>
                                         <div>
-                                            <i class="fas fa-thumbs-up" style="color: blue"></i> 12
-                                            <i class="fas fa-thumbs-down" style="color: red"></i> 8
+                                            <button onclick="form_like('comment', {{ $comment->id }}, 'like')" class="btn">
+                                                <i class="{{ ($comment->likes()->whereNameAndUserId('like', Auth::user()->id)->first()) ? 'fas' : 'far' }} fa-thumbs-up" 
+                                                    style="color: blue">
+                                                    {{ count($comment->likes()->whereLikeId(1)->get()) }}
+                                                </i>
+                                            </button>
+                                            <button onclick="form_like('comment', {{ $comment->id }}, 'dislike')" class="btn">
+                                                <i class="{{ ($comment->likes()->whereNameAndUserId('dislike', Auth::user()->id)->first()) ? 'fas' : 'far' }} fa-thumbs-down" 
+                                                    style="color: red">
+                                                    {{ count($comment->likes()->whereLikeId(2)->get()) }}                                   
+                                                </i> 
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +131,7 @@
 
     <x-slot name="scripts">
         <script>
-             $(document).ready(function() {
+            $(document).ready(function() {
                 $('#comment').summernote({
                     lang: 'es-ES',
                     placeholder: 'Agregar comentario',

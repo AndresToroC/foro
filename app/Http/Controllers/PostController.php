@@ -28,7 +28,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $post->load('likes', 'user', 'comments.likes');
-        
+        // dd($post->likes()->whereNameAndUserId('dislike', 4)->first()->toArray());
         return view('posts.show', compact('post'));
     }
 

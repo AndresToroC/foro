@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\User;
 use App\Models\Like;
@@ -23,14 +24,19 @@ class LikeController extends Controller
         if ($like) {
             if ($model == 'post') {
                 $post = Post::whereId($model_id)->first();
-                // dd($post->likes()->whereUserId($user->id)->get()->toArray());
-                // $post->likes()->whereUserId($user->id)->detach();
-                // dd($post);
+
+                DB::table('model_has_likes')->whereModelIdAndModelTypeAndUserId($post->id, 'App\Models\Post', $user->id)
+                    ->delete();
+                    
                 $post->likes()->save($like, ['user_id' => $user->id]);
             } 
             
             if ($model == 'comment') {
                 $comment = Comment::whereId($model_id)->first();
+
+                DB::table('model_has_likes')->whereModelIdAndModelTypeAndUserId($comment->id, 'App\Models\Comment', $user->id)
+                    ->delete();
+                
                 $comment->likes()->save($like, ['user_id' => $user->id]);    
             }
 
