@@ -57,6 +57,9 @@
                     </li>
                     @role('admin')
                         <li class="nav-item">
+                            <a href="{{ route('admin.dashboard.index') }}" class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}"><i class="fas fa-chart-pie"></i> Dashboard</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.categories.index') }}" class="nav-link {{ Request::is('admin/categories*') ? 'active' : '' }}">
                                 <i class="fas fa-layer-group"></i> Categorias
                             </a>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CategoryTagController;
+use App\Http\Controllers\Admin\DashboardController;
 
 use App\Http\Controllers\Api\TagController;
 
@@ -30,6 +31,7 @@ Route::middleware('auth')->group(function() {
     Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('categories', CategoryController::class);
         Route::resource('categories.tags', CategoryTagController::class);
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     });
 
     Route::resource('user.posts', UserPostController::class);
