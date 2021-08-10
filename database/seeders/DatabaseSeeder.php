@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
+
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,7 +16,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(50)->create();
+        // // Usuarios
+        // $roles = Role::pluck('id');
+        // $users = \App\Models\User::factory(200)->create();
+        
+        // foreach ($users as $key => $user) {
+        //     $user->assignRole(Arr::random($roles->toArray()));
+        // }
+
         // \App\Models\Post::factory(20)->create();
         // \App\Models\Comment::factory(80)->create();
 

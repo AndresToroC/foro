@@ -64,6 +64,9 @@
                                 <i class="fas fa-layer-group"></i> Categorias
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.users.index') }}" class="nav-link {{ Request::is('users/*') ? 'active' : '' }}"><i class="fas fa-users"></i> Usuarios</a>
+                        </li>
                     @endrole
                     {{-- <li class="nav-item dropdown">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fas fa-calendar"></i> Components</a>
