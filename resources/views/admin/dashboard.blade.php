@@ -48,7 +48,7 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-4 col-lg-4">
+            <div class="col-sm-5 col-lg-5">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">Foros en Categorias</h3>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8 col-lg-8">
+            <div class="col-sm-7 col-lg-7">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">Foros en Categorias</h3>
@@ -76,58 +76,10 @@
             chart.render();
 
             // Foros publicados por fecha y estado
-            var options = {
-          series: [{
-          name: 'Net Profit',
-          data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
-        }, {
-          name: 'Revenue',
-          data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-        }, {
-          name: 'Free Cash Flow',
-          data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
-        }],
-          chart: {
-          type: 'bar',
-          height: 350
-        },
-        plotOptions: {
-          bar: {
-            horizontal: false,
-            columnWidth: '55%',
-            endingShape: 'rounded'
-          },
-        },
-        dataLabels: {
-          enabled: false
-        },
-        stroke: {
-          show: true,
-          width: 2,
-          colors: ['transparent']
-        },
-        xaxis: {
-          categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-        },
-        yaxis: {
-          title: {
-            text: '$ (thousands)'
-          }
-        },
-        fill: {
-          opacity: 1
-        },
-        tooltip: {
-          y: {
-            formatter: function (val) {
-              return "$ " + val + " thousands"
-            }
-          }
-        }
-        };
+            var postsPublished = @JSON($postsPublished);
 
-        var chart = new ApexCharts(document.querySelector("#posts-published"), options);
-        chart.render();
+            var chart = new ApexCharts(document.querySelector("#posts-published"), postsPublished);
+            chart.render();
         </script>
     </x-slot>
 </x-app-layout>

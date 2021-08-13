@@ -16,6 +16,6 @@ class DashboardController extends Controller
         $postsCategories = $dashboard->postsCategories();
         $postsPublished = $dashboard->postsPublished();
         
-        return view('admin.dashboard', compact('data', 'postsCategories'));
+        return view('admin.dashboard', compact('data', 'postsCategories', 'postsPublished'));
     }
 }

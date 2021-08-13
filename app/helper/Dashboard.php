@@ -3,6 +3,7 @@
 namespace App\Helper;
 
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Dashboard {
 
@@ -64,24 +65,49 @@ class Dashboard {
     // Foros publicados por fecha y estado
     public function postsPublished() {
         $posts = DB::table('posts')
-            ->select(DB::raw('COUNT(posts.id) AS total, DATE(created_at) AS date'), 'is_visible')
-            ->groupBy(DB::raw('DATE(created_at), is_visible'))
+            ->select(DB::raw('COUNT(posts.id) AS total, DATE_FORMAT(DATE(created_at), "%M") AS date'), 'is_visible')
+            ->groupBy(DB::raw('date, is_visible'))
+            ->orderBy(DB::raw('created_at'))
             ->get();
+            
+        $categories = [];
+        $dataVisibles = [];
+        $dataNotVisibles = [];
+        foreach ($posts as $key => $post) {
+            if (!in_array($post->date, $categories)) {
+                $categories[] = $post->date;
+            }
 
-        // $series = [];
-        // foreach ($posts as $key => $post) {
-        //     $series[]
-        // }
-
+            if ($post->is_visible) {
+                $dataVisibles[] = $post->total;
+            } else {
+                $dataNotVisibles[] = $post->total;
+            }
+        }
+        
         $options = [
-            'series' => [],
+            'series' => [
+                [
+                    'name' => 'Visibles',
+                    'data' => $dataVisibles
+                ],
+                [
+                    'name' => 'No Visibles',
+                    'data' => $dataNotVisibles
+                ]
+            ],
             'chart' => [
-                'type' => 'bar'
+                'type' => 'bar',
+                'toolbar' => [
+                    'tools' => [
+                        'download' => false
+                    ]
+                ]
             ],
             'plotOptions' => [
                 'bar' => [
                     'horizontal' => false,
-                    'columnWidth' => '55%',
+                    'columnWidth' => '25%',
                     'endingShape' => 'rounded'
                 ]
             ],
@@ -94,11 +120,11 @@ class Dashboard {
                 'colors' => ['transparent']
             ],
             'xaxis' => [
-                'categories' => []
+                'categories' => $categories
             ],
             'yaxis' => [
                 'title' => [
-                    'text' => 'prueba'
+                    'text' => 'Foros publicados'
                 ]
             ],
             'fill' => [
@@ -106,5 +132,6 @@ class Dashboard {
             ]
         ];
       
+        return $options;
     }
 }

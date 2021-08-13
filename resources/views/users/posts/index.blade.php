@@ -53,8 +53,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-9">
-                                    {{-- <p>{{ substr($post->content, 0, 255) }} {{ (strlen($post->content) > 255) ? '...' : '' }}</p> --}}
-                                    {{ ($post->description) ? $post->description : 'No se encontro una descripción' }}
+                                    Publicado: {{ $post->created_at }}
+                                    <br>
+                                    Visible: {{ ($post->is_visible) ? 'Si' : 'No' }}
                                 </div>
                                 <div class="col-md-3 text-right">
                                     <a href="{{ route('user.posts.edit', [$user->id, $post->id]) }}" class="btn btn-primary btn-sm">Editar <i class="fas fa-edit"></i></a>
