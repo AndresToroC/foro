@@ -11,6 +11,9 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\Category;
 
+use App\Notifications\PostNotification;
+use App\Events\PostEvent;
+
 class UserPostController extends Controller
 {
     public function index(Request $request, User $user)
@@ -58,7 +61,7 @@ class UserPostController extends Controller
             'content' => 'required'
         ];
         
-        $request->validate($rules);
+        $request->validate($rules);        
         
         if (!$request->has('is_visible')) {
             $request['is_visible'] = 0;
@@ -66,6 +69,9 @@ class UserPostController extends Controller
         
         $post = new Post($request->all());
         $user->posts()->save($post);
+        
+        // Se le manda notificacion al admin de los post creados
+        event(new PostEvent($post));
 
         if ($request->has('tag_ids')) {
             $post->post_tag()->attach($request->tag_ids);

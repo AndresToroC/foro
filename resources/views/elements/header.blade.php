@@ -5,6 +5,40 @@
                 <img src="" class="header-brand-img" alt="Logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
+                <div class="dropdown d-none d-md-flex">
+                    <a class="nav-link icon" data-toggle="dropdown">
+                        <i class="fas fa-bell"></i>
+                        @if (count(auth()->user()->unreadNotifications))
+                            <span class="nav-unread"></span>
+                        @endif
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        @if (count(auth()->user()->unreadNotifications))
+                            @foreach (auth()->user()->unreadNotifications as $notify)
+                                <a href="#" class="dropdown-item d-flex">
+                                    <div>
+                                        <strong>{{ $notify->data['name'] }}</strong>
+                                        <div class="small text-muted">
+                                            @php
+                                                \Carbon\Carbon::setLocale('es');
+                                            @endphp
+                                            {{ $notify->created_at->diffForHumans(\Carbon\Carbon::now()) }}
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
+                            
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('markAsRead') }}" class="dropdown-item text-center text-muted-dark">Marcar todo como leido</a>
+                        @else
+                            <a href="#" class="dropdown-item d-flex">
+                                <div>
+                                    <strong>No hay notificaciones</strong>
+                                </div>
+                            </a>
+                        @endif
+                    </div>
+                </div>
                 <div class="dropdown">
                     <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                         <span class="fas fa-user" style="line-height: 2em; color: #000;"></span>

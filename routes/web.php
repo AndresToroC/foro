@@ -45,4 +45,11 @@ Route::middleware('auth')->group(function() {
     Route::prefix('api')->group(function() {
         Route::get('category/{category}/tags', [TagController::class, 'index']);
     });
+
+    // Notificaciones
+    Route::get('markAsRead', function() {
+        auth()->user()->unreadNotifications->markAsRead();
+
+        return redirect()->back();
+    })->name('markAsRead');
 });
